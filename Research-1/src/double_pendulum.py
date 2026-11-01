@@ -76,8 +76,23 @@ def simulate(
     g: float = 9.81,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Simulate and return (times, states), including the initial state."""
+       
+    if not np.isfinite(duration) or not np.isfinite(dt):
+        raise ValueError("duration and dt must be finite.")
+
     if duration <= 0 or dt <= 0:
-        raise ValueError("duration and dt must be positive")
+        raise ValueError("duration and dt must be positive.")
+
+    initial_state = np.asarray(initial_state, dtype=float)
+
+    if initial_state.shape != (4,):
+        raise ValueError(
+            "initial_state must contain exactly four values: "
+            "(theta1, omega1, theta2, omega2)."
+        )
+
+    if not np.all(np.isfinite(initial_state)):
+        raise ValueError("initial_state must contain only finite values.")
     if min(m1, m2, l1, l2, g) <= 0:
         raise ValueError("masses, lengths, and gravity must be positive")
 
