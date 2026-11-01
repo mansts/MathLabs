@@ -24,6 +24,7 @@ def monte_carlo_simulation(
     duration: float = 10.0,
     dt: float = 0.002,
     seed: int = 42,
+    uncertain_parameters: tuple[str, ...] = PARAMETERS,
     m1: float = 1.0,
     m2: float = 1.0,
     l1: float = 1.0,
@@ -49,7 +50,22 @@ def monte_carlo_simulation(
 
     if epsilon <= 0:
         raise ValueError("epsilon must be positive.")
+   
+    if not uncertain_parameters:
+        raise ValueError(
+            "At least one uncertain parameter is required."
+        )
 
+    if len(set(uncertain_parameters)) != len(uncertain_parameters):
+        raise ValueError(
+            "uncertain_parameters must not contain duplicates."
+        )
+
+    if any(name not in PARAMETERS for name in uncertain_parameters):
+        raise ValueError(
+            f"uncertain_parameters must be selected from {PARAMETERS}."
+        )
+        
     base_parameters = {
         "m1": m1,
         "m2": m2,
@@ -76,7 +92,7 @@ def monte_carlo_simulation(
     for run in range(n_runs):
         sampled_parameters = dict(base_parameters)
 
-        for name in PARAMETERS:
+    for name in uncertain_parameters:
             base_value = base_parameters[name]
 
             # Rejection sampling guarantees a positive parameter.
