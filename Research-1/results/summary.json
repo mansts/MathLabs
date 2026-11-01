@@ -1,0 +1,17 @@
+{
+    "experiment": "Sensitivity vs Monte Carlo",
+    "uncertainty": 0.01,
+    "n_runs": 500,
+    "predicted_horizon": 7.844,
+    "mc_median_horizon": 6.232,
+    "mc_fraction_reached": 0.394,
+    "initial_state": [
+        1.0,
+        0.0,
+        1.5,
+        0.0
+    ],
+    "duration": 10.0,
+    "dt": 0.002,
+    "epsilon": 0.1
+}
