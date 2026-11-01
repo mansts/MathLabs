@@ -35,7 +35,9 @@ jobs:
         run: python run_experiment.py
 
       - name: Upload experiment results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: research-1-results
-          path: results/
+          path: Research-1/results/
+          if-no-files-found: error
